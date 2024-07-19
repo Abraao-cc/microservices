@@ -1,0 +1,46 @@
+
+main section{
+    flex-grow: 1;
+}
+main .promossao{
+    background-color: #000000;
+}
+
+.promossao > article.banner{
+    background-image: url("images/Little-Lemon-logos/Noodle Food Promotion Banner.png");
+    margin: 5px;
+    border: 1px solid #ccc;
+    width: 1160px;
+    height: 250px;
+}
+
+
+article.dishe {
+    margin: 5px;
+    border: 1px solid #ccc;
+    float: left;
+    width: 378.5px;
+    height: 250px;
+    background-color: #EDEFEE;
+}
+article.dishe > img {
+    width: 378.5px;
+    height: 200px;
+
+}
+article.dishe:nth-child(odd) {
+    background-color: #FA9F42;
+
+}
+article.dishe:nth-child(even) {
+    background-color: #708c2f;
+
+}
+article.dishe:hover {
+    border: 1px solid #777;
+}
+.dishe p{
+    color: #000000;
+    font-size: 1rem;
+    text-align: center;
+}
