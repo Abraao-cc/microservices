@@ -2,9 +2,12 @@
 *{
     font-family: Monaco;
 }
+body{
+    margin: 0 auto;
+    padding: 0;
+}
 .section{
     padding: 10px;
-    gri
 }
 .label{
     font-weight: bold;
