@@ -17,6 +17,7 @@ import org.springframework.format.annotation.NumberFormat;
 public class Ativo extends EntidadeID {
 
     private String name;
+    private String serie;
     private Category category;
     private Localization local;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -31,6 +32,14 @@ public class Ativo extends EntidadeID {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getSerie() {
+        return serie;
+    }
+
+    public void setSerie(String serie) {
+        this.serie = serie;
     }
 
     public Category getCategory() {
@@ -72,5 +81,22 @@ public class Ativo extends EntidadeID {
     public void setStatus(String status) {
         this.status = status;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Ativo{");
+        sb.append("name=").append(name);
+        sb.append(", serie=").append(serie);
+        sb.append(", category=").append(category);
+        sb.append(", local=").append(local);
+        sb.append(", datePay=").append(datePay);
+        sb.append(", price=").append(price);
+        sb.append(", status=").append(status);
+        sb.append('}');
+        return sb.toString();
+    }
+
+   
 
 }

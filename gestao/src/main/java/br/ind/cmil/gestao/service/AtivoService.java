@@ -1,6 +1,5 @@
 package br.ind.cmil.gestao.service;
 
-import br.ind.cmil.gestao.domain.Ativo;
 import br.ind.cmil.gestao.dto.AtivoDTO;
 import java.util.List;
 
@@ -8,13 +7,13 @@ import java.util.List;
  *
  * @author Administrativo
  */
-public interface AtivoSevice {
+public interface AtivoService {
 
-    void save(AtivoDTO ativo);
+    AtivoDTO save(AtivoDTO ativo);
 
     void delete(Long id);
 
-    Ativo findId(Long id);
+    AtivoDTO findById(Long id);
 
-    List<Ativo> getAtivos();
+    List<AtivoDTO> getAtivos();
 }

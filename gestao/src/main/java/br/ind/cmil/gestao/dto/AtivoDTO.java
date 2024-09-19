@@ -3,6 +3,7 @@ package br.ind.cmil.gestao.dto;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.NumberFormat;
 
 /**
  *
@@ -10,8 +11,10 @@ import org.springframework.format.annotation.DateTimeFormat;
  */
 public record AtivoDTO(
         Long id,
-        String name, 
+        String name,
+        String serie,
         String status,
+        @NumberFormat(pattern = "#,##0.00", style = NumberFormat.Style.CURRENCY)
         BigDecimal price,
         @DateTimeFormat(pattern = "yyyy-MM-dd")
         LocalDate datePay,
