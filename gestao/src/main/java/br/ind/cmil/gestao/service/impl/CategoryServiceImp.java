@@ -41,13 +41,14 @@ public class CategoryServiceImp implements CategoryService {
     @Override
     public void delete(@Positive Long id) {
         categoryRepo.delete(categoryRepo.findById(id)
-                .orElseThrow(() -> new RecordNotFoundException(id)));
+                .orElseThrow(() -> new RecordNotFoundException(String.valueOf(id),"Not Found")));
     }
 
     @Override
     public CategoryDTO findById(@Positive Long id) {
         return categoryRepo.findById(id).map(categoryMapper::toDTO)
-                .orElseThrow(() -> new RecordNotFoundException(id));}
+                .orElseThrow(() -> new RecordNotFoundException(String.valueOf(id),"Not Found"));
+    }
 
     @Override
     public List<Category> getCategorys() {

@@ -11,11 +11,8 @@ import br.ind.cmil.gestao.service.AtivoService;
 
 import jakarta.validation.constraints.Positive;
 import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,8 +32,7 @@ public class AtivoServiceImp implements AtivoService {
     @Transactional(readOnly = false, rollbackFor = Exception.class)
     @Override
     public AtivoDTO save(AtivoDTO ativo) {
-        if (ativo.id() == null) {
-            validarAtributos(ativo);
+        if (ativo.id() == null) {          
             Ativo a = ativoMapper.toEntity(ativo);
             return ativoMapper.toDTO(ativoReposity.save(a));
         }
@@ -62,13 +58,13 @@ public class AtivoServiceImp implements AtivoService {
     @Override
     public void delete(Long id) {
         ativoReposity.delete(ativoReposity.findById(id)
-                .orElseThrow(() -> new RecordNotFoundException(id)));
+                .orElseThrow(() -> new RecordNotFoundException(String.valueOf(id),"Not Found")));
     }
 
     @Override
     public AtivoDTO findById(@Positive Long id) {
         return ativoReposity.findById(id).map(ativoMapper::toDTO)
-                .orElseThrow(() -> new RecordNotFoundException(id));
+                .orElseThrow(() -> new RecordNotFoundException(String.valueOf(id),"Not Found"));
     }
 
     @Override
@@ -77,28 +73,6 @@ public class AtivoServiceImp implements AtivoService {
         return ativos.stream().map(ativoMapper::toDTO).collect(Collectors.toList());
     }
 
-    private void validarAtributos(AtivoDTO ativo) {
-        Optional<Ativo> ativoValid = ativoReposity.findByName(ativo.name());
-        if (ativoValid.isPresent() && !Objects.equals(ativoValid.get().getId(), ativo.id())) {
-            throw new DataIntegrityViolationException("name já cadastro no sistema!");
-        }
-        ativoValid = ativoReposity.findBySerie(ativo.serie());
-        if (ativoValid.isPresent() && !Objects.equals(ativoValid.get().getSerie(), ativo.serie())) {
-            throw new DataIntegrityViolationException("serie já cadastro no sistema!");
-        }
-        ativoValid = ativoReposity.findByDatePay(ativo.datePay());
-        if (ativoValid.isPresent() && !Objects.equals(ativoValid.get().getDatePay(), ativo.datePay())) {
-            throw new DataIntegrityViolationException("data já cadastro no sistema!");
-        }
-        ativoValid = ativoReposity.findByPrice(ativo.price());
-        if (ativoValid.isPresent() && !Objects.equals(ativoValid.get().getPrice(), ativo.price())) {
-            throw new DataIntegrityViolationException("valor já cadastro no sistema!");
-        }
-        ativoValid = ativoReposity.findByStatus(ativo.status());
-        if (ativoValid.isPresent() && !Objects.equals(ativoValid.get().getStatus(), ativo.status())) {
-            throw new DataIntegrityViolationException("Status já cadastro no sistema!");
-        }
-
-    }
+   
 
 }

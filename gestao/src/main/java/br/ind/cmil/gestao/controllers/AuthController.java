@@ -2,11 +2,13 @@ package br.ind.cmil.gestao.controllers;
 
 import br.ind.cmil.gestao.domain.user.User;
 import br.ind.cmil.gestao.dto.LoginRequestDTO;
-import br.ind.cmil.gestao.dto.RegisterRequestDTO;
+import br.ind.cmil.gestao.dto.RegisterUserDTO;
 import br.ind.cmil.gestao.dto.ResponseDTO;
 import br.ind.cmil.gestao.infra.security.TokenServiceImp;
 import br.ind.cmil.gestao.respositories.UserRepository;
+import br.ind.cmil.gestao.service.AuthorizationService;
 import br.ind.cmil.gestao.service.UserService;
+import jakarta.validation.Valid;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -30,43 +32,37 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
 
     private final UserService userService;
-    private final PasswordEncoder passwordEncoder;
-    private final TokenServiceImp tokenService;
+    private final AuthorizationService authorizationService;
 
     @PostMapping("/login")
-    public ResponseEntity login(@RequestBody LoginRequestDTO body) {
-       /** User user = userService.findByEmailOrName(body.email());
-        if (passwordEncoder.matches(body.password(), user.getPassword())) {
-            String token = this.tokenService.generateToken(user);
+    public ResponseEntity<ResponseDTO> login(@Valid @RequestBody LoginRequestDTO body) {
+        /**
+         * User user = (User) userService.findByLogin(body.email()).get(); if
+         * (passwordEncoder.matches(body.password(), user.getPassword())) {
+         * String token = this.tokenService.generateToken(user);
+         *
+         * return ResponseEntity.ok(new ResponseDTO(user.getName(), token)); }
+         */
 
-            return ResponseEntity.ok(new ResponseDTO(user.getName(), token));
-        }*/
-        return ResponseEntity.badRequest().build();
+        // return ResponseEntity.badRequest().build();
+        ResponseDTO response = authorizationService.findByLogin(body);
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping("/register")
-    public ResponseEntity register(@RequestBody RegisterRequestDTO body) {
-/*
-        Optional<User> user = userService.findByEmail(body.email());
-        if (user.isEmpty()) {
-            User newUser = new User();
-            newUser.setName(body.name());
-            newUser.setEmail(body.email());
-            newUser.setPassword(passwordEncoder.encode(body.password()));
-            this.userService.save(newUser);
-            String token = this.tokenService.generateToken(newUser);
-            return ResponseEntity.ok(new ResponseDTO(newUser.getName(), token));
+    public ResponseEntity<ResponseDTO> register(@Valid @RequestBody RegisterUserDTO body) {
+        ResponseDTO response = userService.save(body);
 
-        }*/
+        return ResponseEntity.ok(response);
 
-        return ResponseEntity.badRequest().build();
+        //}
+        //return ResponseEntity.badRequest().build();
     }
 
     @PutMapping("/edit")
-    public void update(@RequestBody RegisterRequestDTO ativoDTO) {
+    public void update(@RequestBody RegisterUserDTO ativoDTO) {
 
-        this.userService.save(ativoDTO);
-
+        //this.userService.save(ativoDTO);
         // return "redirect:/ativo/add/";
     }
 

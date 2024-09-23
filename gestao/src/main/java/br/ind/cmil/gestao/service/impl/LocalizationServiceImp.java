@@ -41,7 +41,7 @@ public class LocalizationServiceImp implements LocalizationService {
     @Override
     public void delete(@Positive Long id) {
         localizationRepo.delete(localizationRepo.findById(id)
-                .orElseThrow(() -> new RecordNotFoundException(id)));
+                .orElseThrow(() -> new RecordNotFoundException(String.valueOf(id),"Not Found")));
     }
 
     @Override

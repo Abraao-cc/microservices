@@ -9,14 +9,14 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
-import org.springframework.stereotype.Service;
 
 /**
  *
  * @author Administrativo
  */
-@Service
+@Component
 public class TokenServiceImp  {
 
     @Value("${api.security.token.secret}")

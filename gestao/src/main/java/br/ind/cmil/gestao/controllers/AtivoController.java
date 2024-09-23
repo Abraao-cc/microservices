@@ -4,6 +4,7 @@ import br.ind.cmil.gestao.dto.AtivoDTO;
 import br.ind.cmil.gestao.service.AtivoService;
 import br.ind.cmil.gestao.service.CategoryService;
 import br.ind.cmil.gestao.service.LocalizationService;
+import jakarta.validation.Valid;
 import java.util.List;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -37,7 +38,7 @@ public class AtivoController {
     }
 
     @PostMapping("/add")
-    public void save(@RequestBody AtivoDTO ativoDTO) {
+    public void save(@Valid @RequestBody AtivoDTO ativoDTO) {
 
         this.ativoService.save(ativoDTO);
 
@@ -45,7 +46,7 @@ public class AtivoController {
     }
 
     @PutMapping("/edit")
-    public void update(@RequestBody AtivoDTO ativoDTO) {
+    public void update(@Valid @RequestBody AtivoDTO ativoDTO) {
 
         this.ativoService.save(ativoDTO);
 
@@ -63,12 +64,5 @@ public class AtivoController {
         this.ativoService.findById(id);
         return "telefone/telefone";
     }
-/**
-    @GetMapping("/add")
-    public String form() {
-        this.categoryService.getCategorys();
-        this.localizationService.getLocalizations();
-        return "ativo";
-    }
-*/
+
 }

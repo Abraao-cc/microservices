@@ -6,9 +6,15 @@ package br.ind.cmil.gestao.exception;
  */
 public class RecordNotFoundException extends RuntimeException {
 
-    private static final long serialVersionUID = 1L;
+    private final String attibuite;
 
-    public RecordNotFoundException(Long id) {
-        super("Registro não encontrado com o id: " + id);
+    public RecordNotFoundException(String name, String message) {
+        super(message);
+        this.attibuite = name;
     }
+
+    public String getAttibuite() {
+        return attibuite;
+    }
+    
 }

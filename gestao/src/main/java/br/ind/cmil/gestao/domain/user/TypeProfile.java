@@ -28,7 +28,7 @@ public enum TypeProfile {
         return value;
     }
     
-     public static TypeProfile convertPerfilValue(String value) {
+     public static TypeProfile convertProfileValue(String value) {
         if (value == null) {
             return null;
         }

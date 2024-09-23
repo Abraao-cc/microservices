@@ -1,71 +1,50 @@
 package br.ind.cmil.gestao.service.impl;
 
 import br.ind.cmil.gestao.domain.user.User;
-import br.ind.cmil.gestao.dto.LoginRequestDTO;
-import br.ind.cmil.gestao.dto.RegisterRequestDTO;
+import br.ind.cmil.gestao.dto.RegisterUserDTO;
+import br.ind.cmil.gestao.dto.ResponseDTO;
 import br.ind.cmil.gestao.dto.mapper.UserMapper;
+import br.ind.cmil.gestao.infra.security.TokenServiceImp;
 import br.ind.cmil.gestao.respositories.UserRepository;
 import br.ind.cmil.gestao.service.UserService;
-import java.time.LocalDateTime;
-import java.util.Set;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Pageable;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import java.util.Optional;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
  * @author Administrativo
  */
-@Transactional
 @Service
 public class UserServiceImp implements UserService {
 
-    @Autowired
-    private UserRepository userRepository;
-    @Autowired
-    private PasswordEncoder encoder;
-    private UserMapper rm;
+    private final UserRepository userRepository;
+    private final UserMapper userMapper;
+    private final TokenServiceImp tokenService;
+    //private final PasswordEncoder passwordEncoder;
 
-    @Transactional(readOnly = false, rollbackFor = Exception.class)
+    public UserServiceImp(UserRepository userRepository, UserMapper userMapper, TokenServiceImp tokenService) {
+        this.userRepository = userRepository;
+        this.userMapper = userMapper;
+        this.tokenService = tokenService;
+    }
+
+   
+
+    
+
     @Override
-    public void save(RegisterRequestDTO request) {
-      //validarAtributos(request);
-
-        //User user = rm.toEntity(request);
-        User user = new User();
-        if (user.getId() != null) {
-            update(user);
+    public ResponseDTO save(RegisterUserDTO dto) {
+        Optional<User> user = userRepository.findByEmail(dto.email());
+        if (user.isEmpty()) {
+            User newUser = userMapper.toEntity(dto);
+            //newUser.setName(dto.name());
+            //newUser.setEmail(dto.email());
+            //newUser.setPassword(passwordEncoder.encode(dto.password()));
+            this.userRepository.save(newUser);
+            String token = this.tokenService.generateToken(newUser);
+            return new ResponseDTO(newUser.getEmail(), token);
         }
-
-        userRepository.save(user);
-    }
-     public void update(User request) {
-        User user = userRepository.findById(request.getId()).get();
-        user.setName(request.getName());
-        user.setRegistrationDate(user.getRegistrationDate());
-        user.setUpdatedAt(LocalDateTime.now());
-        user.setEmail(request.getEmail());
-        user.setAtivo(request.isAtivo());
-        user.setPassword(new BCryptPasswordEncoder().encode(request.getPassword()));
-        user.setChecker(request.getChecker());
-       // List<Perfil> perfis = request.getPerfis().stream().map(perfil -> perfil).collect(Collectors.toList());
-        // List<Perfil> roles = ps.perfis(request.getPerfis());
-        user.setProfiles(request.getProfiles());
-        user.setId(request.getId());
-        userRepository.save(user);
-    }
-//.orElseThrow(() -> new RuntimeException("User Not Found"));
-    @Override
-    public LoginRequestDTO findByEmailOrName(String email) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public Set<RegisterRequestDTO> getUsers(Pageable pageable) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return null;
     }
 
     @Override
@@ -74,12 +53,17 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
-    public void atived(String code) {
+    public void activate(String code) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public boolean verify(String verificationCode) {
+    public ResponseDTO findByEmail(String login) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public boolean checkCode(String verificationCode) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 

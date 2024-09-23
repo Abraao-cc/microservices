@@ -14,19 +14,19 @@ import jakarta.persistence.Table;
 @SuppressWarnings("serial")
 @Entity
 @Table(name = "tbl_profiles")
-public class Profile extends UserAndProfileID {
+public class RoleUser extends UserAndProfileID {
 
     @Column(name = "profile", nullable = false, unique = true)
     @Convert(converter = ProfileConvert.class)
     private TypeProfile type;
 
-    public Profile() {
+    public RoleUser() {
         
     }
-    public Profile(String id) {
+    public RoleUser(String id) {
        super.setId(id);
     }
-    public Profile(TypeProfile type) {
+    public RoleUser(TypeProfile type) {
         this.type = type;
     }
 
