@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("ativos")
+//@CrossOrigin(origins = "http://localhost:4200/**", allowedHeaders = "Requestor-Type", exposedHeaders = "X-Get-Header")
 public class AtivoController {
 
     private final AtivoService ativoService;
@@ -31,7 +32,7 @@ public class AtivoController {
         this.categoryService = categoryService;
         this.localizationService = localizationService;
     }
-    
+
     @GetMapping
     public List<AtivoDTO> getAtivos() {
         return ativoService.getAtivos();
@@ -42,7 +43,6 @@ public class AtivoController {
 
         this.ativoService.save(ativoDTO);
 
-       
     }
 
     @PutMapping("/edit")
@@ -50,7 +50,7 @@ public class AtivoController {
 
         this.ativoService.save(ativoDTO);
 
-       // return "redirect:/ativo/add/";
+        // return "redirect:/ativo/add/";
     }
 
     @PostMapping("/delete/{id}")

@@ -49,8 +49,8 @@ public class AtivoServiceImp implements AtivoService {
         ativo.setStatus(dto.status());
         ativo.setDatePay(dto.datePay());
         ativo.setPrice(dto.price());
-        ativo.setCategory(new Category(dto.category_ID()));
-        ativo.setLocal(new Localization(dto.local_ID()));
+        ativo.setCategory(new Category(dto.category().id()));
+        ativo.setLocal(new Localization(dto.localization().id()));
 
         return ativoMapper.toDTO(ativoReposity.save(ativo));
     }

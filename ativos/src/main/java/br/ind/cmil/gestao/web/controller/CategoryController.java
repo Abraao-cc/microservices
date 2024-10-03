@@ -6,6 +6,7 @@ import br.ind.cmil.gestao.persistence.service.CategoryService;
 import jakarta.validation.Valid;
 import java.util.List;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
  *
  * @author Administrativo
  */
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("categorys")
 public class CategoryController {
