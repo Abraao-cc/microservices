@@ -1,0 +1,62 @@
+main {
+  width: 50rem;
+  margin: auto;
+  padding: 1rem 1rem 3rem 1rem;
+  border-radius: .6rem;
+}
+
+.title {
+  text-align: center;
+}
+button{
+  margin-top: .5rem;
+}
+
+.fullWidth {
+  width: 100%;
+}
+
+section{
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: center;
+}
+.content{
+  padding-top: 10px;
+}
+.row{
+  display: flex;
+  gap: 10px;
+}
+mat-form-field{
+  width: 100%;
+}
+.action{
+  padding: 0px 25px 20px;
+}
+form{
+  text-align: center;
+  width: 70%;
+  margin: 2rem auto 0 auto;
+}
+h1{
+  font-size: 2rem;
+  font-weight: 500;
+  margin-bottom: 3rem;
+}
+
+.form{
+  width: 100%;
+}
+.buttons{
+  width: 100%;
+  text-align: start;
+}
+
+.action {
+  padding: 0px 25px 20px;
+
+}
+button {
+  flex: 1;
+}

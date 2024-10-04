@@ -1,0 +1,63 @@
+<main class="mat-elevation-z8">
+    <article>
+        <section>
+            <div mat-dialog-title>
+                <h1 class="title">Cadastar Ativo</h1>
+            </div>
+
+            <form [formGroup]="ativoForm" (ngSubmit)="onCreate()">
+               
+                <mat-form-field class="fullWidth">
+                    <mat-label>Name</mat-label>
+                    <input matInput formControlName="name" type="text" placeholder="Ex. antónio">
+                </mat-form-field>
+                <mat-form-field class="fullWidth">
+                    <mat-label>Serie</mat-label>
+                    <input matInput formControlName="serie" type="text" placeholder="Ex. gonzaga">
+                </mat-form-field>
+
+                <mat-form-field class="fullWidth">
+                    <mat-label>datePay</mat-label>
+                    <input matInput [matDatepicker]="picker" formControlName="datePay">
+                    <mat-hint>DD/MM/YYYY</mat-hint>
+                    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+                <mat-form-field class="fullWidth">
+                    <mat-label>status</mat-label>
+                    <input matInput formControlName="status" type="text" placeholder="Ex.: 999999">
+                </mat-form-field>
+
+                <mat-form-field class="fullWidth">
+                    <mat-label>price</mat-label>
+                    <input matInput formControlName="price" type="text" placeholder="Ex.: 999999">
+                </mat-form-field>
+
+                <mat-form-field class="fullWidth">
+                    <mat-label>categoria</mat-label>
+                    <mat-select formControlName="category" required>
+                        <mat-option *ngFor="let category of categorys " [value]="category">
+                            {{category.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field class="fullWidth">
+                    <mat-label>localization</mat-label>
+                    <mat-select formControlName="localization" required>
+                        <mat-option *ngFor="let localization of localizations " [value]="localization">
+                            {{localization.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <div mat-dialog-actions class="action">
+                    <button mat-raised-button (click)="onCancel()" class="btn-space"> Cancelar </button>
+                    <button mat-raised-button color="primary" type="submit">{{data ? 'Atualizar':'Salvar'}}</button>
+                </div>
+
+
+            </form>
+
+
+        </section>
+    </article>
+</main>

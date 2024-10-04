@@ -1,0 +1,23 @@
+<main class="mat-elevation-z8">
+    <article>
+        <Section>
+            <form [formGroup]="categoryForm" (ngSubmit)="onSubmit()" class="example-container">
+                <h1 class="title">Cadastar Categoria</h1>
+
+                <mat-form-field class="fullWidth">
+                    <mat-label>Name: </mat-label>
+
+                    <input matInput type="text" name="name" id="name" formControlName="name">
+                </mat-form-field>
+
+                <div mat-dialog-actions class="action">
+                    <button  mat-stroked-button type="reset" color="warm"  (click)="onCancel()" class="btn-space"> Cancelar </button>
+                    <button mat-flat-button color="primary" type="submit">{{data ? 'Atualizar':'Salvar'}}</button>
+                </div>
+
+               
+            </form>
+
+        </Section>
+    </article>
+</main>

@@ -1,0 +1,19 @@
+<main class="mat-elevation-z8">
+  <article>
+      <Section>
+          <form [formGroup]="localizationForm" (ngSubmit)="onSubmit()" class="example-container">
+              <h1 class="title">Cadastar Centro de Custo</h1>
+
+              <mat-form-field class="fullWidth">
+                  <mat-label>Name: </mat-label>
+
+                  <input matInput type="text" name="name" id="name" formControlName="name">
+              </mat-form-field>
+              <button class="fullWidth mat-elevation-z4" mat-flat-button type="submit" color="primary"
+                  [disabled]="!localizationForm.valid">enviar</button>
+              <button class="fullWidth mat-elevation-z4" mat-stroked-button type="reset" color="warm" routerLink="../">limpar</button>
+          </form>
+
+      </Section>
+  </article>
+</main>
