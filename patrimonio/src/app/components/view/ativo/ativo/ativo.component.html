@@ -36,16 +36,16 @@
                 <mat-form-field class="fullWidth">
                     <mat-label>categoria</mat-label>
                     <mat-select formControlName="category" required>
-                        <mat-option *ngFor="let category of categorys " [value]="category">
-                            {{category.name}}
+                        <mat-option *ngFor="let category of categorys; let i = index " [value]="categorys[i].id">
+                            {{categorys[i].name}}
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
                 <mat-form-field class="fullWidth">
                     <mat-label>localization</mat-label>
                     <mat-select formControlName="localization" required>
-                        <mat-option *ngFor="let localization of localizations " [value]="localization">
-                            {{localization.name}}
+                        <mat-option *ngFor="let localization of localizations ; let i = index" [value]="localizations[i].id">
+                            {{localizations[i].name}}
                         </mat-option>
                     </mat-select>
                 </mat-form-field>

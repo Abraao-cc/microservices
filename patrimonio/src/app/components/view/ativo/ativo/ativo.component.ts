@@ -78,15 +78,9 @@ export class AtivoComponent implements OnInit {
       serie: ['', [Validators.required, Validators.minLength(5)]],
       status: ['', [Validators.required]],
       price: ['', [Validators.required, Validators.minLength(3)]],
-      datePay: [''],
-      category: this._fb.group({
-        id: [''],
-        name: ['', [Validators.required, Validators.minLength(5)]],
-      }),
-      localization: this._fb.group({
-        id: [''],
-        name: ['', [Validators.required, Validators.minLength(5)]],
-      })
+      datePay: ['', [Validators.required]],
+      category:  ['', [Validators.required, Validators.minLength(3)]],
+      localization: ['', [Validators.required, Validators.minLength(3)]]
     });
   }
 
@@ -98,18 +92,25 @@ export class AtivoComponent implements OnInit {
   }
 
   onCreate(): void {
-   
-    if (this.ativoForm.value) {
-      console.log(this.ativoForm.value);
-      this.ativoService.create(this.ativoForm.value).subscribe(data => {
-       
-       
-          console.log(this.ativoForm.value);
-          this.ativoService.mensagem('save success!');
-          this.router.navigate(['ativos']);
-          this._dialogRef.close(true);
-        });
-    }
+this.ativo = this.ativoForm.value;
+
+console.log(this.ativo);
+
+    this.ativoService.save(this.ativo).subscribe({
+      next: response => {
+        console.log('Post added successfully:', response)
+        this.ativoService.mensagem('save success!');
+        this.router.navigate(['ativos']);
+        this._dialogRef.close(true);
+      },
+      error: error => {
+        console.error('Error adding post:', error)
+        for (let i = 0; i < error.error.errors.length; i++) {
+          this.ativoService.mensagem(error.error.errors[i].message);
+        }
+      }
+    });
+
 
   }
 

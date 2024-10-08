@@ -14,17 +14,17 @@ export class CategoryService {
   private cache: Category[] = [];
 
   constructor(private http: HttpClient) {
-    this.apiUrl = 'http://localhost:8080/ativo-api/categorys';
+    this.apiUrl = 'http://localhost:8080/patrimony-service';
   }
 
   findAll(): Observable<Category[]> {
-    return this.http.get<Category[]>(this.apiUrl).pipe(first());
+    return this.http.get<Category[]>(this.apiUrl+'/categorys').pipe(first());
   }
 
 
 
   save(data: Category): Observable<Category> {
-    return this.http.post<Category>(this.apiUrl + "/add", data);
+    return this.http.post<Category>(this.apiUrl + "/categorys/category/add", data);
   }
 
   updateData(id: string, data: Category): Observable<Category> {

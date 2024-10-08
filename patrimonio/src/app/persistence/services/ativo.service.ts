@@ -8,46 +8,49 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   providedIn: 'root'
 })
 export class AtivoService {
-  private apiUrl = 'http://localhost:8080/ativo-api/ativos';
+  private apiUrl!: string;
   private cache: Ativo[] = [];
 
 
   constructor(
     private http: HttpClient,
     private _sbar: MatSnackBar
-  ) { }
+  ) {
+    this.apiUrl = 'http://localhost:8080/patrimony-service/ativos';
+  }
 
   getAtivos(): Observable<Ativo[]> {
     return this.http.get<Ativo[]>(`${this.apiUrl}`);
   }
 
- save(record: Ativo){
-  if (record.id !==null) {
-       return this.update(record);
-     }
-     return this.create(record);    
- }
-  update(record: Ativo) {
-    return this.http.put<Ativo>(`${this.apiUrl}/edit`,record).pipe(first());
+  addAtivo(record: Ativo): Observable<Ativo> {
+    if (record._id !== null) {
+      return this.update(record);
+    }
+    return this.save(record);
+  }
+  private update(record: Ativo) {
+    return this.http.put<Ativo>(`${this.apiUrl}/ativo/edit`, record).pipe(first());
   }
 
-   create(record: Ativo) {
-    return this.http.post<Ativo>(this.apiUrl+'/add', record).pipe(first());
+   save(record: Ativo) : Observable<Ativo>{
+
+    return this.http.post<Ativo>(this.apiUrl + '/ativo/add', record).pipe(first());
   }
   private getById(id: string) {
-    return this.http.get<Ativo>(`${this.apiUrl}/${id}`).pipe(first());
+    return this.http.get<Ativo>(`${this.apiUrl}/ativo/${id}`).pipe(first());
   }
   delete(id: string) {
-    return this.http.delete<Ativo>(`${this.apiUrl}/${id}`).pipe(first());
+    return this.http.delete<Ativo>(`${this.apiUrl}/ativo/${id}`).pipe(first());
   }
 
   mensagem(msg: string): void {
     this._sbar.open(msg, '', {
-        horizontalPosition: 'end',
-        verticalPosition: 'top',
-        duration: 5000
+      horizontalPosition: 'end',
+      verticalPosition: 'top',
+      duration: 5000
 
     });
-}
+  }
 
 }

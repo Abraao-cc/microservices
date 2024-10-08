@@ -14,14 +14,14 @@ export class LocalizationService {
   private cache: Localization[] = [];
 
   constructor(private http: HttpClient) {
-    this.apiUrl = 'http://localhost:8080/ativo-api/localizations';
+    this.apiUrl = 'http://localhost:8080/patrimony-service';
   }
 
  
 
 
    findAll(): Observable<Localization[]> {
-    return this.http.get<Localization[]>(this.apiUrl).pipe(first());
+    return this.http.get<Localization[]>(this.apiUrl+'/localizations').pipe(first());
   }
 
   loadById(id: string) {
