@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatCommonModule } from '@angular/material/core';
+import { MatCommonModule, provideNativeDateAdapter } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
@@ -21,6 +21,10 @@ import { MatButtonModule } from '@angular/material/button';
 @Component({
   selector: 'app-ativos',
   standalone: true,
+  providers: [
+    provideNativeDateAdapter(),
+    AtivoService
+  ],
   imports: [
 
     CommonModule,

@@ -9,7 +9,7 @@
                
                 <mat-form-field class="fullWidth">
                     <mat-label>Name</mat-label>
-                    <input matInput formControlName="name" type="text" placeholder="Ex. antónio">
+                    <input matInput formControlName="name" type="text" placeholder="Ex. telefone interbras">
                 </mat-form-field>
                 <mat-form-field class="fullWidth">
                     <mat-label>Serie</mat-label>
@@ -36,7 +36,7 @@
                 <mat-form-field class="fullWidth">
                     <mat-label>categoria</mat-label>
                     <mat-select formControlName="category" required>
-                        <mat-option *ngFor="let category of categorys; let i = index " [value]="categorys[i].id">
+                        <mat-option *ngFor="let category of categorys; let i = index " [value]="categorys[i].name">
                             {{categorys[i].name}}
                         </mat-option>
                     </mat-select>
@@ -44,14 +44,14 @@
                 <mat-form-field class="fullWidth">
                     <mat-label>localization</mat-label>
                     <mat-select formControlName="localization" required>
-                        <mat-option *ngFor="let localization of localizations ; let i = index" [value]="localizations[i].id">
+                        <mat-option *ngFor="let localization of localizations ; let i = index" [value]="localizations[i].name">
                             {{localizations[i].name}}
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
                 <div mat-dialog-actions class="action">
                     <button mat-raised-button (click)="onCancel()" class="btn-space"> Cancelar </button>
-                    <button mat-raised-button color="primary" type="submit">{{data ? 'Atualizar':'Salvar'}}</button>
+                    <button mat-raised-button color="primary"  type="submit">{{data ? 'Atualizar':'Salvar'}}</button>
                 </div>
 
 

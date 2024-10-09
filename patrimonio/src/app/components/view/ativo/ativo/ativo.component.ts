@@ -23,7 +23,10 @@ import { tap } from 'rxjs';
 @Component({
   selector: 'app-ativo',
   standalone: true,
-  providers: [provideNativeDateAdapter()],
+  providers: [provideNativeDateAdapter(),
+    CategoryService,
+    LocalizationService
+  ],
   imports: [
 
     CommonModule,
@@ -73,14 +76,14 @@ export class AtivoComponent implements OnInit {
     public data: any,
   ) {
     this.ativoForm = this._fb.group({
-      id: [''],
+      _id: [''],
       name: ['', [Validators.required, Validators.minLength(5)]],
       serie: ['', [Validators.required, Validators.minLength(5)]],
       status: ['', [Validators.required]],
       price: ['', [Validators.required, Validators.minLength(3)]],
       datePay: ['', [Validators.required]],
-      category:  ['', [Validators.required, Validators.minLength(3)]],
-      localization: ['', [Validators.required, Validators.minLength(3)]]
+      category: ['', [Validators.required]],
+      localization: ['', [Validators.required]]
     });
   }
 
@@ -91,12 +94,11 @@ export class AtivoComponent implements OnInit {
     this.getLocalizations();
   }
 
+
   onCreate(): void {
-this.ativo = this.ativoForm.value;
 
-console.log(this.ativo);
 
-    this.ativoService.save(this.ativo).subscribe({
+    this.ativoService.addAtivo(this.ativoForm.value).subscribe({
       next: response => {
         console.log('Post added successfully:', response)
         this.ativoService.mensagem('save success!');
@@ -104,10 +106,11 @@ console.log(this.ativo);
         this._dialogRef.close(true);
       },
       error: error => {
-        console.error('Error adding post:', error)
+
         for (let i = 0; i < error.error.errors.length; i++) {
           this.ativoService.mensagem(error.error.errors[i].message);
         }
+        console.error('Error adding post:', error)
       }
     });
 
@@ -130,6 +133,7 @@ console.log(this.ativo);
     );
   }
   onCancel() {
+    this.ativoForm.reset();
     this.location.back();
     //this.funcionario;
 
@@ -138,6 +142,11 @@ console.log(this.ativo);
 
   resetAtivoForm() {
     this.ativoForm.reset();
+  }
+
+
+  newAtivo(ativo: any) {
+
   }
 
 }

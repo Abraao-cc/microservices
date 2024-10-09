@@ -14,14 +14,14 @@ export class LocalizationService {
   private cache: Localization[] = [];
 
   constructor(private http: HttpClient) {
-    this.apiUrl = 'http://localhost:8080/patrimony-service';
+    this.apiUrl = 'http://localhost:8080/patrimony-service/localizations';
   }
 
  
 
 
    findAll(): Observable<Localization[]> {
-    return this.http.get<Localization[]>(this.apiUrl+'/localizations').pipe(first());
+    return this.http.get<Localization[]>(this.apiUrl).pipe(first());
   }
 
   loadById(id: string) {
@@ -33,22 +33,22 @@ export class LocalizationService {
   }
 
   private getById(id: string) {
-    return this.http.get<Localization>(`${this.apiUrl}/${id}`).pipe(first());
+    return this.http.get<Localization>(`${this.apiUrl}/localization/${id}`).pipe(first());
   }
 
-  save(record: Partial<Localization>) {
-    if (record.id) {
+  save(record: Localization):Observable<Localization> {
+    if (record.id !=null) {
       return this.update(record);
     }
     return this.create(record);
   }
 
-  private update(record: Partial<Localization>) {
+  private update(record: Localization) {
     return this.http.put<Localization>(`${this.apiUrl}/${record.id}`, record).pipe(first());
   }
 
   private create(record: Partial<Localization>) {
-    return this.http.post<Localization>(this.apiUrl, record).pipe(first());
+    return this.http.post<Localization>(`${this.apiUrl}/localization/add`, record).pipe(first());
   }
 
   delete(id: string) {

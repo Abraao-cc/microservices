@@ -8,6 +8,6 @@ export interface Ativo {
   status: string,
   price: number,
   datePay: any,
-  category: string,
-  localization: string
+  category: String,
+  localization: String
 }
