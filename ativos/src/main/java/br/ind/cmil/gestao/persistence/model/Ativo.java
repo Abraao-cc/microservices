@@ -2,6 +2,8 @@ package br.ind.cmil.gestao.persistence.model;
 
 import br.ind.cmil.gestao.persistence.base.EntityID;
 import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -18,8 +20,12 @@ public class Ativo extends EntityID {
 
     private String name;
     private String serie;
+    @ManyToOne
+    @JoinColumn(name = "category_id")
     private Category category;
-    private Localization local;
+    @ManyToOne
+    @JoinColumn(name = "localizationy_id")
+    private Localization localization;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate datePay;
     @NumberFormat(pattern = "#,##0.00", style = NumberFormat.Style.CURRENCY)
@@ -50,12 +56,12 @@ public class Ativo extends EntityID {
         this.category = category;
     }
 
-    public Localization getLocal() {
-        return local;
+    public Localization getLocalization() {
+        return localization;
     }
 
-    public void setLocal(Localization local) {
-        this.local = local;
+    public void setLocalization(Localization localization) {
+        this.localization = localization;
     }
 
     public LocalDate getDatePay() {
@@ -89,14 +95,12 @@ public class Ativo extends EntityID {
         sb.append("name=").append(name);
         sb.append(", serie=").append(serie);
         sb.append(", category=").append(category);
-        sb.append(", local=").append(local);
+        sb.append(", localization=").append(localization);
         sb.append(", datePay=").append(datePay);
         sb.append(", price=").append(price);
         sb.append(", status=").append(status);
         sb.append('}');
         return sb.toString();
     }
-
-   
 
 }

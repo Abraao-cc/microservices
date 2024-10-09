@@ -6,7 +6,7 @@ import br.ind.cmil.gestao.persistence.service.CategoryService;
 import jakarta.validation.Valid;
 import java.util.List;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,9 +21,8 @@ import org.springframework.web.bind.annotation.RestController;
  *
  * @author Administrativo
  */
-@CrossOrigin(origins = "http://localhost:4200")
 @RestController
-@RequestMapping("categorys")
+@RequestMapping("/categorys")
 public class CategoryController {
 
     private final CategoryService categoryService;
@@ -33,27 +32,34 @@ public class CategoryController {
     }
 
     @GetMapping
-    public List<Category> list() {
-        return categoryService.getCategorys();
+    public ResponseEntity<List<Category>> list() {
+        return new ResponseEntity<>(categoryService.getCategorys(), HttpStatus.OK);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/category/{id}")
     public CategoryDTO findById(@PathVariable String id) {
         return categoryService.findById(id);
     }
 
-    @PostMapping
-    @ResponseStatus(code = HttpStatus.CREATED)
-    public CategoryDTO create(@RequestBody @Valid CategoryDTO category) {
-        return categoryService.save(category);
+    @PostMapping("/category/add")
+    //@ResponseStatus(code = HttpStatus.CREATED)
+    public ResponseEntity<?> create(@RequestBody @Valid CategoryDTO category) {
+        try {
+
+            return new ResponseEntity<>(categoryService.save(category), HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+
+        }
+
     }
 
-    @PutMapping("/edit")
+    @PutMapping("/category/edit")
     public CategoryDTO update(@RequestBody @Valid CategoryDTO category) {
         return categoryService.save(category);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/category/{id}")
     @ResponseStatus(code = HttpStatus.NO_CONTENT)
     public void delete(@PathVariable String id) {
         categoryService.delete(id);

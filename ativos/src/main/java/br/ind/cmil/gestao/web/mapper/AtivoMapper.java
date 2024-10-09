@@ -24,9 +24,9 @@ public class AtivoMapper {
             return null;
         }
 
-        Category category = (ativo.getCategory().getId() != null) ? ativo.getCategory() : null;
-        Localization localization = (ativo.getLocal().getId() != null) ? ativo.getLocal() : null;
-        return new AtivoDTO(ativo.getId(), ativo.getName(), ativo.getSerie(), ativo.getStatus(), ativo.getPrice(), ativo.getDatePay(), this.categoryMapper.toDTO(category), this.localizationMapper.toDTO(localization));
+        String category = ativo.getCategory().getName() ;
+        String localization = ativo.getLocalization().getName();
+        return new AtivoDTO(ativo.getId(), ativo.getName(), ativo.getSerie(), ativo.getStatus(), ativo.getPrice(), ativo.getDatePay(), category, localization);
     }
 
     public Ativo toEntity(AtivoDTO dto) {
@@ -44,8 +44,8 @@ public class AtivoMapper {
         ativo.setStatus(dto.status());
         ativo.setDatePay(dto.datePay());
         ativo.setPrice(dto.price());
-        ativo.setCategory(new Category(dto.category().id()));
-        ativo.setLocal(new Localization(dto.localization().id()));
+        ativo.setCategory(new Category(dto.category()));
+        ativo.setLocalization(new Localization(dto.localization()));
 
         return ativo;
     }

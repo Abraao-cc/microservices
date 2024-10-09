@@ -9,7 +9,6 @@ import br.ind.cmil.gestao.persistence.service.CategoryService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Positive;
 import java.util.List;
-import org.antlr.v4.runtime.misc.NotNull;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

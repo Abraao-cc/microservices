@@ -17,9 +17,11 @@ public class Localization extends EntityID {
     public Localization() {
     }
 
-    public Localization(String id) {
-        super.setId(id);
+    public Localization(String name) {
+        this.name = name;
     }
+
+   
     
     public String getName() {
         return name;

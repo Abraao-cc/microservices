@@ -18,7 +18,7 @@ public record AtivoDTO(
         BigDecimal price,
         @DateTimeFormat(pattern = "yyyy-MM-dd")
         LocalDate datePay,
-        CategoryDTO category,
-        LocalizationDTO localization) {
+        String category,
+        String localization) {
 
 }

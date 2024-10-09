@@ -1,4 +1,3 @@
-
 package br.ind.cmil.gestao.web.controller;
 
 import br.ind.cmil.gestao.persistence.model.Localization;
@@ -7,9 +6,8 @@ import br.ind.cmil.gestao.web.dto.LocalizationDTO;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Positive;
 import java.util.List;
-import org.antlr.v4.runtime.misc.NotNull;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,41 +23,42 @@ import org.springframework.web.bind.annotation.RestController;
  * @author Administrativo
  */
 
-@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("localizations")
 public class LocalizationController {
-     private final LocalizationService localizationService;
+
+    private final LocalizationService localizationService;
 
     public LocalizationController(LocalizationService localizationService) {
         this.localizationService = localizationService;
     }
 
     @GetMapping
-    public List<Localization> list() {
-        return localizationService.getLocalizations();
+    public ResponseEntity<List<Localization>> list() {
+
+        return new ResponseEntity<>(localizationService.getLocalizations(), HttpStatus.OK);
     }
 
- 
-    @GetMapping("/{id}")
-    public LocalizationDTO findById(@PathVariable  @Positive String id) {
+    @GetMapping("/localization/{id}")
+    public LocalizationDTO findById(@PathVariable @Positive String id) {
         return localizationService.findById(id);
+
     }
 
-    @PostMapping
+    @PostMapping("/localization/add")
     @ResponseStatus(code = HttpStatus.CREATED)
-    public LocalizationDTO create(@RequestBody @Valid  LocalizationDTO Localization) {
+    public LocalizationDTO create(@RequestBody @Valid LocalizationDTO Localization) {
         return localizationService.save(Localization);
     }
 
-    @PutMapping("/edit")
+    @PutMapping("/localization/edit")
     public LocalizationDTO update(@RequestBody @Valid LocalizationDTO Localization) {
         return localizationService.save(Localization);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/localization/{id}")
     @ResponseStatus(code = HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable @NotNull @Positive String id) {
+    public void delete(@PathVariable  @Positive String id) {
         localizationService.delete(id);
     }
 }

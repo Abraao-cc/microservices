@@ -16,9 +16,11 @@ public class Category extends EntityID{
 
     public Category() {
     }
-    public Category(String id) {
-        super.setId(id);
+
+    public Category(String name) {
+        this.name = name;
     }
+   
 
     public String getName() {
         return name;
