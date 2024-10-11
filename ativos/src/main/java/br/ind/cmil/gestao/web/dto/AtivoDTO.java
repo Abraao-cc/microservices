@@ -10,7 +10,7 @@ import org.springframework.format.annotation.NumberFormat;
  * @author Administrativo
  */
 public record AtivoDTO(
-        String id,
+        String _id,
         String name,
         String serie,
         String status,

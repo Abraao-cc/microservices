@@ -11,9 +11,13 @@ public interface AtivoService {
 
     AtivoDTO save(AtivoDTO ativo);
 
+    AtivoDTO update(AtivoDTO ativo);
+
     void delete(String id);
 
     AtivoDTO findById(String id);
 
     List<AtivoDTO> getAtivos();
+
+    //boolean AtivoExists(AtivoDTO ativo);
 }

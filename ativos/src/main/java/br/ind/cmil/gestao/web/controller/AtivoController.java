@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -20,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author Administrativo
  */
 @RestController
-@RequestMapping("/ativos")
+@RequestMapping("/ativo")
 public class AtivoController {
 
     private final AtivoService ativoService;
@@ -29,43 +30,52 @@ public class AtivoController {
         this.ativoService = ativoService;
     }
 
-    @GetMapping
+    @GetMapping("/ativos")
     public ResponseEntity<List<AtivoDTO>> getAtivos() {
-
-        return new ResponseEntity<>(ativoService.getAtivos(), HttpStatus.OK);
+        List<AtivoDTO> ativos = ativoService.getAtivos();
+        if (ativos.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(ativos, HttpStatus.OK);
     }
 
-    @PostMapping("/ativo/add")
-    public ResponseEntity<?> create(@RequestBody @Valid AtivoDTO ativoDTO) {
+    @PostMapping("/add")
+    public ResponseEntity<AtivoDTO> create(@RequestBody @Valid AtivoDTO ativoDTO) {
 
         try {
 
             return new ResponseEntity<>(ativoService.save(ativoDTO), HttpStatus.CREATED);
         } catch (Exception e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 
         }
 
     }
 
-    @PutMapping("/ativo/edit")
-    public void update(@Valid @RequestBody AtivoDTO ativoDTO) {
+    @PutMapping("/edit")
+    public ResponseEntity<AtivoDTO> update(@Valid @RequestBody AtivoDTO ativoDTO) {
 
-        this.ativoService.save(ativoDTO);
+        AtivoDTO ativoSave = ativoService.save(ativoDTO);
 
-        // return "redirect:/ativo/add/";
+        if (!ativoSave._id().isEmpty()) {
+
+            return new ResponseEntity<>(ativoSave, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
     }
 
-    @DeleteMapping("/ativo/delete/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> delete(@PathVariable(name = "id") final String id) {
         this.ativoService.delete(id);
-        return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @GetMapping("/ativo/edit/{id}")
-    public String findById(@PathVariable("id") String id) {
-        this.ativoService.findById(id);
-        return "telefone/telefone";
+    @GetMapping("/{id}")
+    public ResponseEntity<AtivoDTO> getArticleById(@RequestParam("id") String id) {
+
+        return new ResponseEntity<>(ativoService.findById(id), HttpStatus.OK);
     }
 
 }

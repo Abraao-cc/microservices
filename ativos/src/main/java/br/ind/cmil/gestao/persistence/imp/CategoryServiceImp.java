@@ -31,9 +31,7 @@ public class CategoryServiceImp implements CategoryService {
 
     @Override
     public CategoryDTO save(@Valid  CategoryDTO categoryDTO) {
-        //return categoryMapper.toDTO(categoryRepo.save(categoryMapper.toEntity(categoryDTO)));
-        //var category = categoryMapper.toEntity(categoryDTO);
-        //categoryRepo.save(category);
+        
         
          if (categoryDTO.id() == null) {          
            var category = categoryMapper.toEntity(categoryDTO);

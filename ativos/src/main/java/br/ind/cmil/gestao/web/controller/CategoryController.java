@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -22,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author Administrativo
  */
 @RestController
-@RequestMapping("/categorys")
+@RequestMapping
 public class CategoryController {
 
     private final CategoryService categoryService;
@@ -31,7 +30,7 @@ public class CategoryController {
         this.categoryService = categoryService;
     }
 
-    @GetMapping
+    @GetMapping("/categorys")
     public ResponseEntity<List<Category>> list() {
         return new ResponseEntity<>(categoryService.getCategorys(), HttpStatus.OK);
     }
@@ -42,7 +41,7 @@ public class CategoryController {
     }
 
     @PostMapping("/category/add")
-    //@ResponseStatus(code = HttpStatus.CREATED)
+
     public ResponseEntity<?> create(@RequestBody @Valid CategoryDTO category) {
         try {
 
@@ -55,13 +54,17 @@ public class CategoryController {
     }
 
     @PutMapping("/category/edit")
-    public CategoryDTO update(@RequestBody @Valid CategoryDTO category) {
-        return categoryService.save(category);
+    public ResponseEntity<?> update(@RequestBody @Valid CategoryDTO category) {
+    
+
+            return new ResponseEntity<>(categoryService.save(category), HttpStatus.CREATED);
+       
     }
 
-    @DeleteMapping("/category/{id}")
-    @ResponseStatus(code = HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable String id) {
-        categoryService.delete(id);
+    @DeleteMapping("/category/delete/{id}")
+    public ResponseEntity<Void> delete(@PathVariable(name = "id") final String id) {
+        this.categoryService.delete(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
 }

@@ -15,16 +15,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
  *
  * @author Administrativo
  */
-
 @RestController
-@RequestMapping("localizations")
+@RequestMapping
 public class LocalizationController {
 
     private final LocalizationService localizationService;
@@ -33,7 +31,7 @@ public class LocalizationController {
         this.localizationService = localizationService;
     }
 
-    @GetMapping
+    @GetMapping("localizations")
     public ResponseEntity<List<Localization>> list() {
 
         return new ResponseEntity<>(localizationService.getLocalizations(), HttpStatus.OK);
@@ -46,19 +44,31 @@ public class LocalizationController {
     }
 
     @PostMapping("/localization/add")
-    @ResponseStatus(code = HttpStatus.CREATED)
-    public LocalizationDTO create(@RequestBody @Valid LocalizationDTO Localization) {
-        return localizationService.save(Localization);
+    public ResponseEntity<?> create(@RequestBody @Valid LocalizationDTO Localization) {
+        try {
+
+            return new ResponseEntity<>(localizationService.save(Localization), HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+
+        }
     }
 
     @PutMapping("/localization/edit")
-    public LocalizationDTO update(@RequestBody @Valid LocalizationDTO Localization) {
-        return localizationService.save(Localization);
+    public ResponseEntity<?> update(@RequestBody @Valid LocalizationDTO Localization) {
+
+        try {
+
+            return new ResponseEntity<>(localizationService.save(Localization), HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+
+        }
     }
 
-    @DeleteMapping("/localization/{id}")
-    @ResponseStatus(code = HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable  @Positive String id) {
-        localizationService.delete(id);
+    @DeleteMapping("/localization/delete/{id}")
+    public ResponseEntity<Void> delete(@PathVariable(name = "id") final String id) {
+        this.localizationService.delete(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
